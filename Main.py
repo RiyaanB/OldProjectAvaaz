@@ -120,7 +120,7 @@ def card_game():
         display.fill((200,200,0))
         for i in range(4):
             for j in range(4):
-                display.blit(list_of_current_cards[(4*i)+j].getImage(), ((i*220) + 460, (j*220) + 20))
+                display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
         pygame.display.update()
         if(len(bim.queue) > 0):
             chosen_card = bim.queue[0]
@@ -134,25 +134,25 @@ def card_game():
                     while(time.time() - card_time < 1):
                         for i in range(4):
                             for j in range(4):
-                                display.blit(list_of_current_cards[(4*i)+j].getImage(), ((i*220) + 460, (j*220) + 20))
+                                display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
                         pygame.display.update()
                     if current_face_up.name == list_of_current_cards[chosen_card-1].name:
                         card_time = time.time()
                         display.fill((0,255,0))
-                        while(time.time() - card_time < 2):
+                        while(time.time() - card_time < 1):
                             for i in range(4):
                                 for j in range(4):
-                                    display.blit(list_of_current_cards[(4*i)+j].getImage(), ((i*220) + 460, (j*220) + 20))
+                                    display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
                             pygame.display.update()
                         current_face_up = None
                         number_of_correct += 2
                     else:
                         card_time = time.time()
                         display.fill((255,0,0))
-                        while(time.time() - card_time < 2):
+                        while(time.time() - card_time < 1):
                             for i in range(4):
                                 for j in range(4):
-                                    display.blit(list_of_current_cards[(4*i)+j].getImage(), ((i*220) + 460, (j*220) + 20))
+                                    display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
                             pygame.display.update()
                         current_face_up.face_up = False
                         current_face_up = None
@@ -182,7 +182,7 @@ while not QUIT:
                 pygame.display.update()
             current_word = random.choice(words)
             correct_counter += 1
-            if correct_counter == 1:
+            if correct_counter == 5:
                 card_game()
                 correct_counter = 0
         else:

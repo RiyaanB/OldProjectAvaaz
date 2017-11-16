@@ -36,7 +36,7 @@ class ButtonInputManager(Thread):
             if state != 0:
                 n = int(math.log(state, 2)) + 1
                 self.add(n)
-                #time.sleep(0.4)
+                time.sleep(0.4)
 
     def pop(self):
         return self.queue.pop(0)
@@ -45,12 +45,12 @@ class ButtonInputManager(Thread):
         self.queue.append(number)
 
     def getButtonStates(self):
-        stri = ""
+        #stri = ""
         number = 0
         for n in range(len(ButtonInputManager.N)):
-            stri += str(GPIO.input(ButtonInputManager.N[n]))
+            #stri += str(GPIO.input(ButtonInputManager.N[n]))
             number += (GPIO.input(ButtonInputManager.N[n]) * (2**n))
-        print(stri)
+        #print(stri)
         return number
     
     def clear(self):
@@ -67,7 +67,7 @@ class BreathInputManager:
 
 if __name__ == "__main__":
     BIM = ButtonInputManager()
-    #while True:
-    #    print(BIM.queue)
+    while True:
+        print(BIM.queue)
     
     

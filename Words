@@ -1,4 +1,4 @@
-Alley,Ali,Alee,
+Alley,Ali,Alee,Tally
 Apple
 Aunty,Auntie,Anti
 Ball,Bol,Bowl
@@ -6,7 +6,7 @@ Big,Beeg
 Bug,Buck,Bag
 Cake,Kake
 Cap,Cape
-Cop,Cope,Corp
+Cop,Cope,Corp,Cup
 Dad,Dead
 Dot,Dote
 Duck,Deck
@@ -28,8 +28,8 @@ Map
 Mop
 Net,Neat
 Office,Orifice
-Pearl,Purl
-Pen,Pin
+Pearl,Purl,Paul
+Pen,Pin,10,Ten
 Phone,Fone
 Pig,Pick,Peg
 Queue,Q
@@ -38,10 +38,10 @@ Red,Rad
 Rug
 Sack,Cack,Saque,Sac
 Save,Saiv,Sayve
-Sea,C,See
+Sea,C,See,P
 Shake,Shaque,,Shay
 Shoes,Shoos,Choose
-Sow,So,Sau,Cow
+Sow,So,Sau,Cow,Chow
 Sun,Sun
 Taxi
 Ten,Tun,10
@@ -52,7 +52,7 @@ Up
 Van
 Vase,Vas
 Well,Wel
-White,Wheat
+White,Wheat,Fight
 Win,Ween
 Yellow
 Yes,Yas,Yus
