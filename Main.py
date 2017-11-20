@@ -19,24 +19,25 @@ lines = open("Words", "r").read().split("\n")
 words = []
 for l in range(len(lines)-1):
     line = lines[l]
-    data = line.split(",")
-    for d in range(0, len(data)):
-        data[d] = data[d].lower()
-    actual = data[0]
-    variations = data
-    image = None
-    try:
-        name = "./Data/" + actual[0].upper() + actual[1: len(actual)] + "/" + actual.lower() + ".jpg"
-        image = pygame.image.load(name)
-    except pygame.error:
-        name = "./Data/" + actual[0].upper() + actual[1: len(actual)] + "/" + actual.lower() + ".png"
-        image = pygame.image.load(name)
-    p = image.get_size()
-    k = 540 / p[1]
-    image = pygame.transform.smoothscale(image, (int(k * p[0]), int(k * p[1])))
-    if image is None:
-        raise Exception("Couldn't load the image IDK y")
-    words.append(Word(actual, variations, image))
+    if not (line[0] == "#"):
+        data = line.split(",")
+        for d in range(0, len(data)):
+            data[d] = data[d].lower()
+        actual = data[0]
+        variations = data
+        image = None
+        try:
+            name = "./Data/" + actual[0].upper() + actual[1: len(actual)] + "/" + actual.lower() + ".jpg"
+            image = pygame.image.load(name)
+        except pygame.error:
+            name = "./Data/" + actual[0].upper() + actual[1: len(actual)] + "/" + actual.lower() + ".png"
+            image = pygame.image.load(name)
+        p = image.get_size()
+        k = 540 / p[1]
+        image = pygame.transform.smoothscale(image, (int(k * p[0]), int(k * p[1])))
+        if image is None:
+            raise Exception("Couldn't load the image IDK y")
+        words.append(Word(actual, variations, image))
 
 class Card:
     def __init__(self, image, name, copy=True):
@@ -44,7 +45,7 @@ class Card:
         self.image = pygame.transform.smoothscale(image, (200, 200))
         self.face_up = False
         if copy:
-            print(name)
+            #print(name)
             self.copy = Card(image, name, False)
     def __str__(self):
         return str(self.name)
@@ -64,7 +65,7 @@ for l in range(len(lines)-2):
     cards.append(Card(image, name, True))
 
 print("Finished Loading Resources!")
-
+time.sleep(0.3)
 ###############################################################################
 
 dimensions = (1920, 1080)
@@ -122,22 +123,24 @@ def card_game():
         for i in range(4):
             for j in range(4):
                 display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
-        display.blit(pygame.font.SysFont("Comic Sans MS", 100).render("Nice work!", 1, (255, 255, 255)), (1210, 770))
+        display.blit(pygame.font.SysFont("Comic Sans MS", 100).render("Moves: " + str(move_count), 1, (255, 255, 255)), (1350, 200))
         pygame.display.update()
         if(len(bim.queue) > 0):
             chosen_card = bim.queue[0]
             bim.clear()
             if not list_of_current_cards[chosen_card-1].face_up:
-                move_count += 1
                 list_of_current_cards[chosen_card-1].face_up = True
                 if current_face_up is None:
                     current_face_up = list_of_current_cards[chosen_card-1]
                 else:
+                    move_count += 1
                     card_time = time.time()
+                    display.fill((200,200,0))
                     while(time.time() - card_time < 1):
                         for i in range(4):
                             for j in range(4):
                                 display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
+                        display.blit(pygame.font.SysFont("Comic Sans MS", 100).render("Moves: " + str(move_count), 1, (255, 255, 255)), (1350, 200))
                         pygame.display.update()
                     if current_face_up.name == list_of_current_cards[chosen_card-1].name:
                         card_time = time.time()
@@ -146,6 +149,7 @@ def card_game():
                             for i in range(4):
                                 for j in range(4):
                                     display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
+                            display.blit(pygame.font.SysFont("Comic Sans MS", 100).render("Moves: " + str(move_count), 1, (255, 255, 255)), (1350, 200))
                             pygame.display.update()
                         current_face_up = None
                         number_of_correct += 2
@@ -156,10 +160,35 @@ def card_game():
                             for i in range(4):
                                 for j in range(4):
                                     display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
+                            display.blit(pygame.font.SysFont("Comic Sans MS", 100).render("Moves: " + str(move_count), 1, (255, 255, 255)), (1350, 200))
                             pygame.display.update()
                         current_face_up.face_up = False
                         current_face_up = None
                         list_of_current_cards[chosen_card-1].face_up = False
+            bim.clear()
+
+def blow_game(moves):
+    blows = 0
+    if moves < 10:
+        blows = 1
+    elif moves < 15:
+        blows = 2
+    elif moved < 20:
+        blows = 3
+    elif moved < 25:
+        blows = 4
+    elif moves < 30:
+        blows = 5
+    elif moves < 35:
+        blows = 6
+    elif moves < 40:
+        blows = 7
+    elif blows < 45:
+        blows = 8
+    else:
+        blows = 9
+    # 1880/n is width of each panel
+    while(
 
 QUIT = False
 while not QUIT:
@@ -167,7 +196,7 @@ while not QUIT:
         if event.type == pygame.QUIT:
             QUIT = True
 
-    display.fill((100, 200, 100))
+    display.fill((50, 200, 50))
     if current_recognizer.result:
         print(current_recognizer.detected_word)
         a = time.time()
@@ -185,7 +214,7 @@ while not QUIT:
                 pygame.display.update()
             current_word = random.choice(words)
             correct_counter += 1
-            if correct_counter == 1:
+            if correct_counter == 5:
                 card_game()
                 correct_counter = 0
         else:
