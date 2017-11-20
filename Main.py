@@ -3,7 +3,7 @@ import time
 import random
 from threading import Thread
 from Utilities import SpeechRecognizer
-from ButtonInputManager import ButtonInputManager as BIM
+from InputManager import ButtonInputManager as BIM
 pygame.init()
 
 class Word:
@@ -116,16 +116,19 @@ def card_game():
     list_of_current_cards = set_of_current_cards
     current_face_up = None
     number_of_correct = 0
+    move_count = 0
     while not (number_of_correct == 16):
         display.fill((200,200,0))
         for i in range(4):
             for j in range(4):
                 display.blit(list_of_current_cards[(4*j)+i].getImage(), ((i*220) + 460, (j*220) + 20))
+        display.blit(pygame.font.SysFont("Comic Sans MS", 100).render("Nice work!", 1, (255, 255, 255)), (1210, 770))
         pygame.display.update()
         if(len(bim.queue) > 0):
             chosen_card = bim.queue[0]
             bim.clear()
             if not list_of_current_cards[chosen_card-1].face_up:
+                move_count += 1
                 list_of_current_cards[chosen_card-1].face_up = True
                 if current_face_up is None:
                     current_face_up = list_of_current_cards[chosen_card-1]
@@ -182,7 +185,7 @@ while not QUIT:
                 pygame.display.update()
             current_word = random.choice(words)
             correct_counter += 1
-            if correct_counter == 5:
+            if correct_counter == 1:
                 card_game()
                 correct_counter = 0
         else:

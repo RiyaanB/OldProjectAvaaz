@@ -59,14 +59,41 @@ class ButtonInputManager(Thread):
     def toString(self):
         return self.queue
 
-class BreathInputManager:
+class BreathInputManager(Thread):
+    N = [21]
+    
     def __init__(self):
-        GPIO.setup(6, GPIO.IN)
+        super().__init__()
+        GPIO.setup(21 ,GPIO.IN)
+        self.queue = []
+        self.start()
+        
+    def run(self):
         while True:
-            print(GPIO.input(6))
+            state = self.getButtonStates()
+            if state != 0:
+                n = int(math.log(state, 2)) + 1
+                self.add(n)
+                time.sleep(0.4)
+
+    def pop(self):
+        return self.queue.pop(0)
+
+    def add(self, number):
+        self.queue.append(number)
+
+    def getButtonStates(self):
+        number = GPIO.input(21)
+        return number
+    
+    def clear(self):
+        self.queue = []
+
+    def toString(self):
+        return self.queue
 
 if __name__ == "__main__":
-    BIM = ButtonInputManager()
+    BIM = BreathInputManager()
     while True:
         print(BIM.queue)
     
